@@ -33,6 +33,8 @@ fps = 60
 width = 300
 height = 300
 offset = 100
+paddleSpeed = 1
+ballSpeed = 20
 
 ballColor, paddleColor :: Color
 ballColor = dark red
@@ -49,9 +51,9 @@ instance Renderable Paddle where
       color paddleColor $ rectangleSolid 20 80]
 
 paddleUp :: Paddle -> Paddle
-paddleUp (Paddle (c, x, y)) = Paddle (c, x, min 100 $ y + 1)
+paddleUp (Paddle (c, x, y)) = Paddle (c, x, min 100 $ y + paddleSpeed)
 paddleDown :: Paddle -> Paddle
-paddleDown (Paddle (c, x, y)) = Paddle (c, x, max (-100) $ y - 1)
+paddleDown (Paddle (c, x, y)) = Paddle (c, x, max (-100) $ y - paddleSpeed)
 ballPos :: Ball -> (Float, Float)
 ballPos (Ball (x, y, _, _)) = (x, y)
 ballVell :: Ball -> (Float, Float)
@@ -70,7 +72,7 @@ data PongGame = Game
 
 initialState :: PongGame
 initialState = Game
-  { ball = Ball (-10, 30, 20, -60)
+  { ball = Ball (-10, 30, 2 * ballSpeed, -6 * ballSpeed)
   , player1 = Paddle (rose, 120, 40)
   , player2 = Paddle (orange, -120, 60)
   , player1Score = 0
